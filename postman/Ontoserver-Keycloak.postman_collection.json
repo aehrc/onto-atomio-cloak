@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "801e98aa-0d20-4ebc-a706-fb869b44a6e5",
+		"name": "Ontoserver-Keycloak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27691827"
+	},
+	"item": [
+		{
+			"name": "ontoserver (with auth)",
+			"item": [
+				{
+					"name": "upstream feed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{onto}}/api/upstream.xml",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"api",
+								"upstream.xml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "syndication feed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{onto}}/synd/syndication.xml",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"synd",
+								"syndication.xml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CodeSystem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{onto}}/fhir/CodeSystem",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"fhir",
+								"CodeSystem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create CodeSystem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"resourceType\": \"CodeSystem\",\r\n  \"id\": \"examplethree\",\r\n  \"meta\": {\r\n    \"profile\": [\r\n      \"http://hl7.org/fhir/StructureDefinition/shareablecodesystem\"\r\n    ]\r\n  },\r\n  \"text\": {\r\n    \"status\": \"generated\",\r\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">\\n      <p>CodeSystem &quot;ACME Codes for Cholesterol&quot;: This is an example code system that includes \\n        all the codes for serum cholesterol defined by ACME inc.</p>\\n      <p>Developed by: FHIR project team (example)</p>\\n      <p>Published for testing on 28-Jan 2016</p>\\n      <p>This code system defines all the ACME codes for serum cholesterol:</p>\\n      <table class=\\\"grid\\\">\\n        <tr>\\n          <td>\\n            <b>Code</b>\\n          </td>\\n          <td>\\n            <b>Display</b>\\n          </td>\\n          <td>\\n            <b>Definition</b>\\n          </td>\\n        </tr>\\n        <tr>\\n          <td>chol-mmol</td>\\n          <td>SChol (mmol/L)</td>\\n          <td>Serum Cholesterol, in mmol/L</td>\\n        </tr>\\n        <tr>\\n          <td>chol-mass</td>\\n          <td>SChol (mg/L)</td>\\n          <td>Serum Cholesterol, in mg/L</td>\\n        </tr>\\n        <tr>\\n          <td>chol</td>\\n          <td>SChol</td>\\n          <td>Serum Cholesterol</td>\\n        </tr>\\n      </table>\\n    </div>\"\r\n  },\r\n  \"url\": \"http://hl7.org/fhir/CodeSystem/example\",\r\n  \"identifier\": [\r\n    {\r\n      \"system\": \"http://acme.com/identifiers/codesystems\",\r\n      \"value\": \"internal-cholesterol-inl\"\r\n    }\r\n  ],\r\n  \"version\": \"20160128\",\r\n  \"name\": \"ACMECholCodesBlood\",\r\n  \"title\": \"ACME Codes for Cholesterol in Serum/Plasma\",\r\n  \"status\": \"draft\",\r\n  \"experimental\": true,\r\n  \"date\": \"2016-01-28\",\r\n  \"publisher\": \"Acme Co\",\r\n  \"contact\": [\r\n    {\r\n      \"name\": \"FHIR project team\",\r\n      \"telecom\": [\r\n        {\r\n          \"system\": \"url\",\r\n          \"value\": \"http://hl7.org/fhir\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"description\": \"This is an example code system that includes all the ACME codes for serum/plasma cholesterol from v2.36.\",\r\n  \"caseSensitive\": true,\r\n  \"content\": \"complete\",\r\n  \"filter\": [\r\n    {\r\n      \"code\": \"acme-plasma\",\r\n      \"description\": \"An internal filter used to select codes that are only used with plasma\",\r\n      \"operator\": [\r\n        \"=\"\r\n      ],\r\n      \"value\": \"the value of this filter is either 'true' or 'false'\"\r\n    }\r\n  ],\r\n  \"concept\": [\r\n    {\r\n      \"code\": \"chol-mmol\",\r\n      \"display\": \"SChol (mmol/L)\",\r\n      \"definition\": \"Serum Cholesterol, in mmol/L\",\r\n      \"designation\": [\r\n        {\r\n          \"use\": {\r\n            \"system\": \"http://acme.com/config/fhir/codesystems/internal\",\r\n            \"code\": \"internal-label\"\r\n          },\r\n          \"value\": \"From ACME POC Testing\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"code\": \"chol-mass\",\r\n      \"display\": \"SChol (mg/L)\",\r\n      \"definition\": \"Serum Cholesterol, in mg/L\",\r\n      \"designation\": [\r\n        {\r\n          \"use\": {\r\n            \"system\": \"http://acme.com/config/fhir/codesystems/internal\",\r\n            \"code\": \"internal-label\"\r\n          },\r\n          \"value\": \"From Paragon Labs\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"code\": \"chol\",\r\n      \"display\": \"SChol\",\r\n      \"definition\": \"Serum Cholesterol\",\r\n      \"designation\": [\r\n        {\r\n          \"use\": {\r\n            \"system\": \"http://acme.com/config/fhir/codesystems/internal\",\r\n            \"code\": \"internal-label\"\r\n          },\r\n          \"value\": \"Obdurate Labs uses this with both kinds of units...\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{onto}}/fhir/CodeSystem/examplethree",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"fhir",
+								"CodeSystem",
+								"examplethree"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "useBrowser",
+						"value": true,
+						"type": "boolean"
+					},
+					{
+						"key": "state",
+						"value": "",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{client_secret}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{client_id}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{keycloak}}/realms/{{realm}}/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "{{keycloak}}/realms/{{realm}}/protocol/openid-connect/auth",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code_with_pkce",
+						"type": "string"
+					},
+					{
+						"key": "accessToken",
+						"value": "{{token}}",
+						"type": "string"
+					},
+					{
+						"key": "tokenType",
+						"value": "bearer",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code not 401 or 403\", function () {",
+							"    pm.expect(pm.response.code).to.not.be.oneOf([401, 403]);",
+							"});",
+							"",
+							"var responseJson;",
+							"if (pm.response.text().startsWith(\"<?xml\")) {",
+							"    responseJson = xml2Json(pm.response.text());",
+							"} else {",
+							"    responseJson = pm.response.json();",
+							"}",
+							"",
+							"pm.test(\"No invalid token error\", function() {",
+							"    if (responseJson.error) {",
+							"        if (!responseJson.error_description.startsWith(\"Access token expired\"))",
+							"            pm.expect(responseJson.error).to.not.equal(\"invalid_token\", \"Check your public RS256 key in docker-compose.yml!\")",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"No expired token\", function() {",
+							"    if (responseJson.error) {",
+							"        if (!responseJson.error_description.startsWith(\"Cannot convert access token\"))",
+							"            pm.expect(responseJson.error).to.not.equal(\"invalid_token\", \"The token is expired\")",
+							"    }",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "atomio (with auth)",
+			"item": [
+				{
+					"name": "feed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{onto}}/api/upstream.xml",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"api",
+								"upstream.xml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create feed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{feed}}\",\n  \"title\": \"my test feed\",\n  \"sub-title\": \"my subtitle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{atomio}}/feed",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add feed entry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"test\",\n  \"title\": \"my test feed\",\n  \"sub-title\": \"my subtitle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{atomio}}/feed",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add feed entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "entry",
+									"value": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"title\": \"string\",\n  \"authors\": [\n    {\n      \"name\": \"string\",\n      \"url\": \"string\",\n      \"email\": \"string\"\n    }\n  ],\n  \"rights\": \"string\",\n  \"published\": \"2023-06-28T03:38:56.587Z\",\n  \"updated\": \"2023-06-28T03:38:56.587Z\",\n  \"summary\": \"string\",\n  \"contentItemIdentifier\": \"string\",\n  \"contentItemVersion\": \"string\",\n  \"batchBundleInterpretation\": true,\n  \"categories\": [\n    {\n      \"name\": \"nYCdO6SNtXutORIDKB3JwxXAIJAbveuaWGGt0nF9blqc9MsKivZYtmTH8ZZG79O24V0TFOdSNytLYwH4-Sw9z9ZMKN8jOow\",\n      \"scheme\": \"https://0%FF%D4%d0%d5%D3V%f8%Bc\",\n      \"label\": \"string\"\n    }\n  ],\n  \"fhirVersion\": \"strin\",\n  \"fhirProfiles\": [\n    \"string\"\n  ],\n  \"artefacts\": [\n    {\n      \"type\": \"4k50ZdXqwml1yRm0QdvhokZG4mYG0a4xYOHqmCmXT3T8WZTIH47cpQ3hURqhswVeyV_uil/OHmlZInVYffpou2aHTKLQgx.kTLMQMO.8zeqqArZ\",\n      \"length\": 0,\n      \"filename\": \"ZWDSBTT2tDgSQ6VWu9wjDNOesoQcQEmTnAgCxw7qgl6aTHX-i7qDlVIw7nYHTSLzKmd752WkbEXpA-xJ_aNATTt_9_9LKP66GxGct4AOBwHyLHh\",\n      \"validated\": true\n    }\n  ],\n  \"permissions\": [\n    \"string\"\n  ]\n}",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"contentType": "application/macbinary",
+									"type": "file",
+									"src": "/Users/gil331/Projects/onto-atomio-cloak/output-onlinefiletools.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{atomio}}/feed/{{feed}}/entry",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed",
+								"{{feed}}",
+								"entry"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "authRequestParams",
+						"value": [
+							{
+								"key": "scope",
+								"value": "test",
+								"enabled": false,
+								"send_as": "request_url"
+							}
+						],
+						"type": "any"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code_with_pkce",
+						"type": "string"
+					},
+					{
+						"key": "useBrowser",
+						"value": true,
+						"type": "boolean"
+					},
+					{
+						"key": "tokenName",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{client_secret}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{client_id}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{keycloak}}/realms/{{realm}}/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "{{keycloak}}/realms/{{realm}}/protocol/openid-connect/auth",
+						"type": "string"
+					},
+					{
+						"key": "accessToken",
+						"value": "{{token}}",
+						"type": "string"
+					},
+					{
+						"key": "tokenType",
+						"value": "bearer",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code not 401 or 403\", function () {",
+							"    pm.expect(pm.response.code).to.not.be.oneOf([401, 403]);",
+							"});",
+							"",
+							"var responseJson;",
+							"if (pm.response.text().startsWith(\"<?xml\")) {",
+							"    responseJson = xml2Json(pm.response.text());",
+							"} else {",
+							"    responseJson = pm.response.json();",
+							"}",
+							"",
+							"pm.test(\"No invalid token error\", function() {",
+							"    if (responseJson.error) {",
+							"        if (!responseJson.error_description.startsWith(\"Access token expired\"))",
+							"            pm.expect(responseJson.error).to.not.equal(\"invalid_token\", \"Check your public RS256 key in docker-compose.yml!\")",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"No expired token\", function() {",
+							"    if (responseJson.error) {",
+							"        if (!responseJson.error_description.startsWith(\"Cannot convert access token\"))",
+							"            pm.expect(responseJson.error).to.not.equal(\"invalid_token\", \"The token is expired\")",
+							"    }",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "fhir Metadata",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Conformance includes security\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData.rest[0].security)\r",
+							"    pm.expect(jsonData.rest[0].security.extension[0]).to.be.not.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{onto}}/fhir/metadata",
+					"host": [
+						"{{onto}}"
+					],
+					"path": [
+						"fhir",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
