@@ -32,9 +32,10 @@ Most of the setup is handled within the docker-compose file, with some steps nee
 To run Ontocloak, you will need to create some self signed certificates you can do this using openssl from the root of the project. The reason that ontocloak is ran over https is that atomio will not accept a security provider over http.
 
 ```
-openssl genrsa -out /certs/ontocloak/server.key 2048
-openssl req -new -out /certs/ontocloak/server.csr -key /certs/ontocloak/server.key
-openssl x509 -req -days 365 -in /certs/ontocloak/server.csr -signkey /certs/ontocloak/server.key -out /certs/ontocloak/server.crt
+openssl genrsa -out ./certs/ontocloak/server.key 2048
+openssl req -new -out ./certs/ontocloak/server.csr -key ./certs/ontocloak/server.key
+openssl x509 -req -days 365 -in ./certs/ontocloak/server.csr -signkey ./certs/ontocloak/server.key -out ./certs/ontocloak/server.crt
+cp ./certs/ontocloak/server.crt ./atomio/server.crt
 ```
 
 ```
