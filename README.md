@@ -35,7 +35,8 @@ To run Ontocloak, you will need to create some self signed certificates you can 
 openssl genrsa -out ./certs/ontocloak/server.key 2048
 openssl req -new -out ./certs/ontocloak/server.csr -key ./certs/ontocloak/server.key
 openssl x509 -req -days 365 -in ./certs/ontocloak/server.csr -signkey ./certs/ontocloak/server.key -out ./certs/ontocloak/server.crt
-cp ./certs/ontocloak/server.crt ./atomio/server.crt
+## Create a truststore that will be mounted into the atomio container
+keytool -import -alias ontocloak_crt -file ./certs/ontocloak/server.crt -noprompt -storepass changeit -keystore ./certs/ontocloak/truststore
 ```
 
 ```
