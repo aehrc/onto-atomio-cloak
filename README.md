@@ -25,7 +25,7 @@ You can read more about Atomio [here](https://ontoserver.csiro.au/site/our-solut
 
 ### Putting it all together
 
-Most of the setup is handled within the docker-compose file, with some steps needing to be done manually for the first time. Namely creating the self signed certificates which is mentioned [here](#ontocloak) and generating some keycloak user's that is mentioned [here]()
+Most of the setup is handled within the docker-compose file, with some steps needing to be done manually for the first time. Namely creating the self signed certificates which is mentioned [here](#ontocloak--its-postgres-setup) and [here](#ontoserver-setup) and generating some keycloak user's that is mentioned [here](#postman)
 
 ##### Ontocloak & it's postgres setup
 
@@ -139,6 +139,15 @@ Ontoserver can't (currently) discover it's security settings in the same manner 
 Similarly you need to get the client secret for the atomio client within the ontoserver realm of keycloak.
 
 Alot of the environment values are commented, so those values will not be expanded upon here. You can find a full lost of config values for ontoserver [here](https://ontoserver.csiro.au/docs/6/config-all.html).
+
+You will need to provide some certificates to ontocache inside ontocache/certs. You will need privkey.pem and fullchain.pem
+These can be generated via openssl
+
+```
+openssl genrsa > ./ontocache/certs/privkey.pem
+openssl req -new -x509 -key ./ontocache/certs/privkey.pem > ./ontocache/certs/fullchain.pem
+```
+
 ```
 ontoserver:
     image: quay.io/aehrc/ontoserver:ctsa-6
