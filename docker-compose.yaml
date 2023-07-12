@@ -109,10 +109,11 @@ services:
       - db
     environment:
       # A list of all environment configs is available here: https://ontoserver.csiro.au/docs/6/config-all.html
-      - ontoserver.fhir.base=https://localhost:8000/fhir
+      - ontoserver.fhir.base=http://localhost:8000/fhir
       - ontoserver.fhir.header.cacheControl=must-revalidate,max-age=1
       # enables role based security in ontoserver
-      - ontoserver.security.enabled=true
+      - ONTOSERVER_INSECURE=true
+      # - ontoserver.security.enabled=true
       # readonly settings for each endpoint, by default this is set to false
       - ontoserver.security.readOnly.api=false
       - ontoserver.security.readOnly.fhir=false
@@ -125,7 +126,7 @@ services:
       # The token endpoint
       - conformance.security.token=https://localhost:8443/auth/realms/ontoserver/protocol/openid-connect/token
       - conformance.security.kinds=SMART-on-fhir
-      - conformance.security.audience=https://localhost:8000/fhir 
+      - conformance.security.audience=http://localhost:8000/fhir 
       - JAVA_OPTS=-Xmx8G
       - ontoserver.security.verify.certs=false
       # The location of the upstream syndication server

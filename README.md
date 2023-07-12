@@ -6,6 +6,10 @@ This project intends to give a basic rundown (not production ready) deployment t
 - Within Australia, email help@digitalhealth.gov.au to request a (free) Ontoserver licence. ADHA will then arrange authorisation for your quay.io account.
 - Elsewhere, email ontoserver-support@csiro.au to discuss licensing terms (both evaluation and production licences are available for single and multiple instances, no limit on number of users). Once the licence is established, CSIRO will register your quay.io account name to enable access to their repository
 
+:warning: To run this on an M1/2 chip you will need to enable rosetta support on docker - to do this as of 12/07/23 go to docker desktop -> settings -> features in development -> 'Use Rosetta for x86/amd64 emulation on Apple Silicon'
+
+:warning: You should go through the set up from start to finish - as there is a few steps that are necassary to make the stack run, it will not run with a simple docker compose up
+
 ### Ontocloak
 
 Ontocloak is a wrapper around keycloak, that intends to make it easier to use keycloak with ontoserver.
@@ -27,6 +31,19 @@ You can read more about Atomio [here](https://ontoserver.csiro.au/site/our-solut
 
 Most of the setup is handled within the docker-compose file, with some steps needing to be done manually for the first time. Namely creating the self signed certificates which is mentioned [here](#ontocloak--its-postgres-setup) and [here](#ontoserver-setup) and generating some keycloak user's that is mentioned [here](#postman)
 
+##### /etc/hosts setup
+
+You will need to map the servers to localhost in /etc/hosts. To do this $sudo vi /etc/hosts and add the line
+
+```
+127.0.0.1   localhost ontocloakdemo ontoserver atomio
+```
+
+After the completion of setup the servers will be available at:
+- https://ontocloakdemo:8443
+- https://ontoserver:8444
+- http://atomio:3000
+  
 ##### Ontocloak & it's postgres setup
 
 To run Ontocloak, you will need to create some self signed certificates you can do this using openssl from the root of the project. The reason that ontocloak is ran over https is that atomio will not accept a security provider over http.
@@ -38,6 +55,9 @@ openssl x509 -req -days 365 -in ./certs/ontocloak/server.csr -signkey ./certs/on
 ## Create a truststore that will be mounted into the atomio container
 keytool -import -alias ontocloak_crt -file ./certs/ontocloak/server.crt -noprompt -storepass changeit -keystore ./certs/ontocloak/truststore
 ```
+
+
+This will make ontocloak discoverable at https://ontocloakdemo:8443
 
 ```
 ontocloakdemo:
@@ -107,6 +127,8 @@ The two example user's are below. Make sure you are in the ontoserver realm and 
 ##### Atomio setup
 
 The only thing really of note here, that is outside the normal setup is the JAVA_TOOL_OPTIONS. This needs to be passed to allow atomio to trust self signed certificates. The Dockerfile located at /atomio/Dockerfile takes the certificate that is located at /certs/ontocloak/server.crt and creates a truststore in the atomio container.
+
+Atomio will be discoverable at
 
 ```
 atomio:
@@ -202,15 +224,17 @@ ontoserver:
 
 In the postman folder you will find some environments, and example requests to do the things that you will need client tokens obtained from keycloak. There is two environments - one for ontoserver, and one for atomio.
 
-![Environment Variables](/images/environment_variables.png "Environment Variables")
+![Environment Variables](/images/environment_variables.png "Environment Variables")  
+
 You may need to replace some of these environment variables with the ones from your setup.
 
-![Environment Folder Structure](/images/folder_structure.png "Folder Structure")
+![Environment Folder Structure](/images/folder_structure.png "Folder Structure")  
+
 Each of the folder's themselves have tokens set on them, and to request a token for said folder change your environment to either ontoserver/atomio and make the request to keycloak.
 
 This is an example of the structure of a request for a token here:
 
-![Example token request](/images/tokens.png "Token Request")
+![Example token request](/images/tokens.png "Token Request")  
 
 A few things that you will have to do:
 
