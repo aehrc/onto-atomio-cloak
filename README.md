@@ -302,6 +302,8 @@ This is the same as the ONTOSERVER_CLIENT_SECRET and ATOMIO_CLIENT_SECRET that y
 
 Each of the folder's themselves have tokens set on them, and to request a token for said folder change your environment to either ontoserver/atomio and make the request to keycloak.
 
+:warning: unnecassary step, only do the next paragraph if desired
+
 You may wish to login with a user that you have created, and granted whatever read/write privelages you want. To do this, you will need to create a user on ontocloak, and grant it the desired roles that you want it to have. Note the change of Grant type to Authorization Code (With PKCE), and Authorize Using Browser being ticked.
 This is an example of the structure of a request using the browser authentication flow, where you are logging in with a specific user.
 
