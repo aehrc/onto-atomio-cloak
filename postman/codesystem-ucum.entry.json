@@ -1,0 +1,30 @@
+{
+    "title": "UCUM",
+    "authors": [],
+    "rights": null,
+    "published": 1675130563968,
+    "updated": 1675130563968,
+    "summary": null,
+    "contentItemIdentifier": "http://unitsofmeasure.org",
+    "contentItemVersion": "2.1",
+    "batchBundleInterpretation": true,
+    "categories": [
+        {
+            "name": "FHIR_CodeSystem",
+            "scheme": "http://ns.electronichealth.net.au/ncts/syndication/asf/scheme/1.0.0",
+            "label": "FHIR CodeSystem"
+        }
+    ],
+    "fhirVersion": "4.0.1",
+    "fhirProfiles": [],
+    "artefacts": [
+        {
+            "type": "application/json",
+            "sha256": "da984accfb3e75c35fb0770c747cd6223757a5b67f3278884d2f44f0eebc9eee",
+            "length": 120915,
+            "filename": "codesystem-ucum.json",
+            "validated": false
+        }
+    ],
+    "permissions": []
+}

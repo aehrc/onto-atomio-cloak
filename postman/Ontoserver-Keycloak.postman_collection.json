@@ -39,6 +39,39 @@
 					"response": []
 				},
 				{
+					"name": "fhir Metadata",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Conformance includes security\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    console.log(jsonData.rest[0].security)\r",
+									"    pm.expect(jsonData.rest[0].security.extension[0]).to.be.not.null;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{onto}}/fhir/metadata",
+							"host": [
+								"{{onto}}"
+							],
+							"path": [
+								"fhir",
+								"metadata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "syndication feed",
 					"request": {
 						"method": "GET",
@@ -216,7 +249,7 @@
 			"name": "atomio (with auth)",
 			"item": [
 				{
-					"name": "feed",
+					"name": "get feeds",
 					"event": [
 						{
 							"listen": "test",
@@ -232,13 +265,40 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{onto}}/api/upstream.xml",
+							"raw": "{{atomio}}/feed",
 							"host": [
-								"{{onto}}"
+								"{{atomio}}"
 							],
 							"path": [
-								"api",
-								"upstream.xml"
+								"feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get individual feed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{atomio}}/feed",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed"
 							]
 						}
 					},
@@ -274,32 +334,6 @@
 					"name": "add feed entry",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"test\",\n  \"title\": \"my test feed\",\n  \"sub-title\": \"my subtitle\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{atomio}}/feed",
-							"host": [
-								"{{atomio}}"
-							],
-							"path": [
-								"feed"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add feed entry",
-					"request": {
-						"method": "POST",
 						"header": [
 							{
 								"key": "accept",
@@ -311,15 +345,15 @@
 							"formdata": [
 								{
 									"key": "entry",
-									"value": "{\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"title\": \"string\",\n  \"authors\": [\n    {\n      \"name\": \"string\",\n      \"url\": \"string\",\n      \"email\": \"string\"\n    }\n  ],\n  \"rights\": \"string\",\n  \"published\": \"2023-06-28T03:38:56.587Z\",\n  \"updated\": \"2023-06-28T03:38:56.587Z\",\n  \"summary\": \"string\",\n  \"contentItemIdentifier\": \"string\",\n  \"contentItemVersion\": \"string\",\n  \"batchBundleInterpretation\": true,\n  \"categories\": [\n    {\n      \"name\": \"nYCdO6SNtXutORIDKB3JwxXAIJAbveuaWGGt0nF9blqc9MsKivZYtmTH8ZZG79O24V0TFOdSNytLYwH4-Sw9z9ZMKN8jOow\",\n      \"scheme\": \"https://0%FF%D4%d0%d5%D3V%f8%Bc\",\n      \"label\": \"string\"\n    }\n  ],\n  \"fhirVersion\": \"strin\",\n  \"fhirProfiles\": [\n    \"string\"\n  ],\n  \"artefacts\": [\n    {\n      \"type\": \"4k50ZdXqwml1yRm0QdvhokZG4mYG0a4xYOHqmCmXT3T8WZTIH47cpQ3hURqhswVeyV_uil/OHmlZInVYffpou2aHTKLQgx.kTLMQMO.8zeqqArZ\",\n      \"length\": 0,\n      \"filename\": \"ZWDSBTT2tDgSQ6VWu9wjDNOesoQcQEmTnAgCxw7qgl6aTHX-i7qDlVIw7nYHTSLzKmd752WkbEXpA-xJ_aNATTt_9_9LKP66GxGct4AOBwHyLHh\",\n      \"validated\": true\n    }\n  ],\n  \"permissions\": [\n    \"string\"\n  ]\n}",
 									"contentType": "application/json",
-									"type": "text"
+									"type": "file",
+									"src": "/Users/gil331/Projects/onto-atomio-cloak/codesystem-ucum.entry.json"
 								},
 								{
 									"key": "file",
-									"contentType": "application/macbinary",
+									"contentType": "application/json",
 									"type": "file",
-									"src": "/Users/gil331/Projects/onto-atomio-cloak/output-onlinefiletools.txt"
+									"src": "/Users/gil331/Projects/onto-atomio-cloak/codesystem-ucum.json"
 								}
 							]
 						},
@@ -332,6 +366,80 @@
 								"feed",
 								"{{feed}}",
 								"entry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clone self feed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"test\",\n  \"title\": \"my test feed\",\n  \"sub-title\": \"my subtitle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{atomio}}/feed/$clone?name=testfeed2&url=http://atomio:8080/feed/testFeed/syndication.xml",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed",
+								"$clone"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "testfeed2"
+								},
+								{
+									"key": "url",
+									"value": "http://atomio:8080/feed/testFeed/syndication.xml"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clone ontoserver feed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"test\",\n  \"title\": \"my test feed\",\n  \"sub-title\": \"my subtitle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{atomio}}/feed/$clone?name=testfeed3&url=http://atomio:8080/feed/testFeed/syndication.xml",
+							"host": [
+								"{{atomio}}"
+							],
+							"path": [
+								"feed",
+								"$clone"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "testfeed3"
+								},
+								{
+									"key": "url",
+									"value": "http://atomio:8080/feed/testFeed/syndication.xml"
+								}
 							]
 						}
 					},
@@ -453,39 +561,6 @@
 					}
 				}
 			]
-		},
-		{
-			"name": "fhir Metadata",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Conformance includes security\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    console.log(jsonData.rest[0].security)\r",
-							"    pm.expect(jsonData.rest[0].security.extension[0]).to.be.not.null;\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{onto}}/fhir/metadata",
-					"host": [
-						"{{onto}}"
-					],
-					"path": [
-						"fhir",
-						"metadata"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [

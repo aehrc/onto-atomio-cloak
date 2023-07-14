@@ -65,7 +65,19 @@ services:
       - atomio.cors.allowedOriginPatterns=ALL
       # The location of the issuer of tokens
       - atomio.security.issuer-uri=${ATOMIO_REALM_ENDPOINT}
+      - atomio.client.urlWhitelist=http://atomio:8080, https://ontoserver:443
+      # Passing java opts to atomio - useful in our case to tell the jvm to trust ontocloaks self signed certificate
       - JAVA_TOOL_OPTIONS=-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-17-openjdk/lib/security/truststore -Djavax.net.ssl.trustStorePassword=changeit
+      # Configure atomio to talk to itself - needed to clone one of it's own feeds!
+      - atomio.security.client.1.url_prefix=${ATOMIO_BASE_URL}
+      - atomio.security.client.1.client_id=${ATOMIO_CLIENT_ID}
+      - atomio.security.client.1.client_secret=${ATOMIO_CLIENT_SECRET}
+      - atomio.security.client.1.token_prefix=${ONTOCLOAK_ONTOSERVER_TOKEN_ENDPOINT}
+      # Configure atomio to talk to ontoserver - needed to clone a feed from ontoserver!
+      - atomio.security.client.2.url_prefix=${ONTOSERVER_BASE_URL}
+      - atomio.security.client.2.client_id=${ONTOSERVER_CLIENT_ID}
+      - atomio.security.client.2.client_secret=${ONTOSERVER_CLIENT_SECRET}
+      - atomio.security.client.2.token_prefix=${ONTOCLOAK_ONTOSERVER_TOKEN_ENDPOINT}
     depends_on:
       - ontocloakdemo
     ports:
@@ -93,7 +105,7 @@ services:
     depends_on:
       - ontoserver
     ports:
-      - "8000:80"
+      # - "8000:80"
       - "8444:443"
     environment:
       - TZ=${TZ}
@@ -107,43 +119,45 @@ services:
       - ontocloakdemo
       - postgres_ontocloak_demo
       - db
+    ports:
+      - "5005:5005"
     environment:
       # A list of all environment configs is available here: https://ontoserver.csiro.au/docs/6/config-all.html
-      - ontoserver.fhir.base=http://localhost:8000/fhir
+      - JAVA_OPTS=-Xmx8G -Djavax.net.ssl.trustStore=/usr/lib/jvm/java-17-openjdk/lib/security/truststore -Djavax.net.ssl.trustStorePassword=changeit -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      - ontoserver.fhir.base=https://ontoserver:8444/fhir
       - ontoserver.fhir.header.cacheControl=must-revalidate,max-age=1
       # enables role based security in ontoserver
       - ONTOSERVER_INSECURE=true
       # - ontoserver.security.enabled=true
       # readonly settings for each endpoint, by default this is set to false
-      - ontoserver.security.readOnly.api=false
-      - ontoserver.security.readOnly.fhir=false
-      - ontoserver.security.readOnly.synd=false
-      # This needs to be the public key for your realm, go to https://ontocloakdemo:8443/auth/admin/master/console/#/{{realmName}}/realm-settings/keys and copy the public key from rs256
+      - ontoserver.security.readOnly.api=true
+      - ontoserver.security.readOnly.fhir=true
+      - ontoserver.security.readOnly.synd=true
       - ontoserver.security.token.secret=${ONTOSERVER_SECURITY_SECRET}
       - conformance.security.description=This is a description that you can use to describe how oauth works with this server
       # this is featured in the machine-readable ConformanceStatement and should point to the "authorize" url of your keycloak installation
-      - conformance.security.authorize=https://localhost:8443/auth/realms/ontoserver/protocol/openid-connect/auth 
+      - conformance.security.authorize=https://ontocloakdemo:8443/auth/realms/ontoserver/protocol/openid-connect/auth 
       # The token endpoint
-      - conformance.security.token=https://localhost:8443/auth/realms/ontoserver/protocol/openid-connect/token
+      - conformance.security.token=${ONTOCLOAK_ONTOSERVER_TOKEN_ENDPOINT}
       - conformance.security.kinds=SMART-on-fhir
-      - conformance.security.audience=http://localhost:8000/fhir 
-      - JAVA_OPTS=-Xmx8G
+      - conformance.security.audience=https://ontoserver:8444/fhir 
       - ontoserver.security.verify.certs=false
       # The location of the upstream syndication server
       - atom.syndication.feedLocation=${ATOMIO_FEED_LOCATION}
       # Hostname (including protocol, e.g. http:// or https://) for which to provide OAuth2 credentials when requesting content
       - authentication.oauth.endpoint.1=${ATOMIO_BASE_URL}
       # OAuth client ID to send when requesting a system token for use in requesting content from authentication.oauth.endpoint.{n}
-      - authentication.oauth.endpoint.client_id.1=atomio
+      - authentication.oauth.endpoint.client_id.1=${ATOMIO_CLIENT_ID}
       # Client secret to send when requesting an OAuth2 system token for use in requesting content from authentication.oauth.endpoint.{n}
-      - authentication.oauth.endpoint.client_secret.1=goztCc8ZqJOgMmxlvEk3UWNMEvIcuhSB
+      - authentication.oauth.endpoint.client_secret.1=${ATOMIO_CLIENT_SECRET}
       #  Strategy (basic_auth or body) to use when requesting an OAuth2 system token for use in requesting content authentication.oauth.endpoint.{n}
-      - authentication.oauth.endpoint.strategy.1=basic_auth
+      - authentication.oauth.endpoint.strategy.1=body
       # Token endpoint URL for requesting an OAuth token for use in retrieving content from authentication.oauth.endpoint.{n}
-      - authentication.oauth.endpoint.token_endpoint.1=https://localhost:8443/auth/realms/ontoserver/protocol/openid-connect/token
+      - authentication.oauth.endpoint.token_endpoint.1=${ONTOCLOAK_ONTOSERVER_TOKEN_ENDPOINT}
       - TZ=${TZ}
     volumes:
       - onto-data:/var/onto
+      - ./certs/ontocloak/truststore:/usr/lib/jvm/java-17-openjdk/lib/security/truststore
     logging:
       options:
         max-size: 1024m
