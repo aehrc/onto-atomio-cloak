@@ -238,6 +238,8 @@ ontoserver:
 
 :warning: You will need to configure the values in the .env file.
 
+You should start by running docker compose up, as you will need to access ontocloakdemo to be able to get some of the values for the .env file.
+
 The values that you will need to update here are ONTOSERVER_SECURITY_SECRET, ONTOSERVER_CLIENT_SECRET, ATOMIO_CLIENT_SECRET.
 
 ONTOSERVER_SECURITY_SECRET can be found on keycloak by following realm settings -> keys -> rs 256 -> public key.
@@ -285,6 +287,8 @@ ATOMIO_CLIENT_SECRET=AHinacPgb3MPVSq6bn8EjzzjUOyKNxrL
 ONTOCLOAK_ONTOSERVER_TOKEN_ENDPOINT=https://ontocloakdemo:8443/auth/realms/ontoserver/protocol/openid-connect/token
 ```
 
+After updating these variables in the .env, run docker compose down && docker compose up
+
 ### Postman and checking out the environment
 
 In the postman folder you will find some environments, and example requests to do the things that you will need client tokens obtained from keycloak. There is two environments - one for ontoserver, and one for atomio.
@@ -303,7 +307,7 @@ This is an example of the structure of a request using the browser authenticatio
 
 ![Example token request](/images/tokens.png "Token Request")  
 
-A few things that you will have to do:
+A summary of the things that will be done, which are detailed in the numbered steps.
 
 - Create a new feed in atomio through {{atomio}}/feed
 - Create an entry in the feed you just created through {{atomio}}/feed/{{feedName}}
@@ -314,7 +318,9 @@ A few things that you will have to do:
 
 2. Next, head to postman and open up our environments and collection. Set the values in the postman environments with your client secrets.   
    
-3. Get a token for the atomio collection  
+3. Get a token for the atomio collection. 
+
+:warning: Note, you will need to be using the atomio environment for this step until step 8.
 
 4. Send the get feeds request - note that we have no feeds.    
 
@@ -332,13 +338,13 @@ A few things that you will have to do:
 
 We will now pull this feed into ontoserver  
 
-8. Select the ontoserver environment, and request a token for ontoserver. 
+8. Select the ontoserver environment, and request a token for ontoserver through the ontoserver collection
 
 9. Make the get upstream feed request in the ontoserver collection
 
 ![Feed pulled into ontoserver](/images/upstream_feed.png)
 
-### We will now checkout the ontoserver environment. 
+### We will now checkout the ontoserver through ontocommand environment. 
 
 1. head to https://ontoserver:8444/fhir
    
