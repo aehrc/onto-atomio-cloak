@@ -1,0 +1,9 @@
+certs/ontocloak/certfile.cert
+certs/ontocloak/server.crt
+certs/ontocloak/server.csr
+certs/ontocloak/server.key
+certs/ontocloak/truststore
+ontocache/certs/fullchain.pem
+ontocache/certs/privkey.pem
+.idea/*
+.DS_Store
