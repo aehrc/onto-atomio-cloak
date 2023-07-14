@@ -245,6 +245,9 @@ ONTOSERVER_SECURITY_SECRET can be found on keycloak by following realm settings 
 ONTOSERVER_CLIENT_SECRET & ATOMIO_CLIENT_SECRET secrets can be found for the client's on ontocloakdemo by following clients -> {clientName} -> credentials -> secret.
 These secrets will also need to be put into the postman setup.
 
+You can get these secrets at these urls [ontoserver](https://ontocloakdemo:8443/auth/admin/master/console/#/realms/ontoserver/clients/86caea36-9836-44ae-9c95-25b8003bc554/credentials),
+[atomio](https://ontocloakdemo:8443/auth/admin/master/console/#/realms/ontoserver/clients/b51e3771-c86e-4ad1-9c30-daa9b3585882/credentials)
+
 ```
 # Set up for ontocloaks postgres
 TZ=Australia/Brisbane
