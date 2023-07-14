@@ -309,7 +309,7 @@ This is an example of the structure of a request using the browser authenticatio
 
 ![Example token request](/images/tokens.png "Token Request")  
 
-A summary of the things that will be done, which are detailed in the numbered steps.
+### A summary of the things that will be done, which are detailed in the numbered steps.
 
 - Create a new feed in atomio through {{atomio}}/feed
 - Create an entry in the feed you just created through {{atomio}}/feed/{{feedName}}
