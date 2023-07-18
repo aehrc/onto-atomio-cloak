@@ -48,6 +48,22 @@
   "roles": {
     "realm": [
       {
+        "id": "1bf028ec-6cab-4cba-883d-ef4efc905957",
+        "name": "API_READ",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "d17fad1f-fb0e-4e6c-82b1-c26010dd4b16",
+        "name": "FHIR_READ",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
         "id": "b9dd7fb3-98e7-433d-b031-917988adbc57",
         "name": "SYND_WRITE",
         "description": "be able to write to the syndication server (atomio)",
@@ -66,9 +82,16 @@
         "attributes": {}
       },
       {
-        "id": "4df7e87a-b545-4549-9743-bf5cd5a47813",
-        "name": "SYND_READ",
-        "description": "be able to read the syndication server (atomio)",
+        "id": "7fe9df85-0e63-4f50-bf79-aef4eb4ae26d",
+        "name": "All communities owner",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "31648092-1cb7-4179-9b63-e6facc8fb680",
+        "name": "Community owner",
         "composite": false,
         "clientRole": false,
         "containerId": "ontoserver",
@@ -86,6 +109,58 @@
         "id": "f7107ce7-c3dd-4de2-b99d-7298c7237832",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "d0fa5288-cfda-4e79-b32a-040383e38e97",
+        "name": "API_WRITE",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "f33ddc07-23ee-4227-8d59-408ce43e1ae8",
+        "name": "system/*.write",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "6861db05-3be8-4416-8621-e88fad437646",
+        "name": "PERM_testone_READ",
+        "description": "READ access to the test community content using the testone security label",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "7cdbeca5-1104-4940-9bbc-bfa3115e37c2",
+        "name": "PERM_testone_OWNER",
+        "description": "Owner of the test community",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "b09cfff9-b453-48bf-91c0-37bdb717649b",
+        "name": "PERM_testone_WRITE",
+        "description": "WRITE access to the test community content using the testone security label",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ontoserver",
+        "attributes": {}
+      },
+      {
+        "id": "4df7e87a-b545-4549-9743-bf5cd5a47813",
+        "name": "SYND_READ",
+        "description": "be able to read the syndication server (atomio)",
         "composite": false,
         "clientRole": false,
         "containerId": "ontoserver",
@@ -113,8 +188,8 @@
         "attributes": {}
       },
       {
-        "id": "f33ddc07-23ee-4227-8d59-408ce43e1ae8",
-        "name": "system/*.write",
+        "id": "c1facf1f-03d7-4324-aa5f-992ce529d5eb",
+        "name": "Community creator",
         "composite": false,
         "clientRole": false,
         "containerId": "ontoserver",
@@ -378,6 +453,7 @@
       ],
       "security-admin-console": [],
       "admin-cli": [],
+      "onto-ui": [],
       "account-console": [],
       "atomio": [
         {
@@ -501,6 +577,61 @@
     }
   },
   "groups": [
+    {
+      "id": "9852e9ea-3915-4c08-9e38-7d808b06e64c",
+      "name": "Communities",
+      "path": "/Communities",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": [
+        {
+          "id": "aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+          "name": "test consumers",
+          "path": "/Communities/test consumers",
+          "attributes": {},
+          "realmRoles": [
+            "PERM_testone_READ"
+          ],
+          "clientRoles": {},
+          "subGroups": []
+        },
+        {
+          "id": "9452d95d-d7cc-420f-90ff-62e7c156e81c",
+          "name": "test authors",
+          "path": "/Communities/test authors",
+          "attributes": {},
+          "realmRoles": [
+            "PERM_testone_READ",
+            "PERM_testone_WRITE"
+          ],
+          "clientRoles": {},
+          "subGroups": []
+        }
+      ]
+    },
+    {
+      "id": "c6af7bb5-2266-4842-a6b6-0a81c400041c",
+      "name": "Community owners",
+      "path": "/Community owners",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": [
+        {
+          "id": "91ccebc2-0d54-4862-99e0-c77a6de72522",
+          "name": "test owners",
+          "path": "/Community owners/test owners",
+          "attributes": {},
+          "realmRoles": [
+            "PERM_testone_OWNER",
+            "Community owner"
+          ],
+          "clientRoles": {},
+          "subGroups": []
+        }
+      ]
+    },
     {
       "id": "90412cc5-65ec-40c1-a236-a61352afde8b",
       "name": "atomio",
@@ -646,8 +777,8 @@
   "otpPolicyPeriod": 30,
   "otpPolicyCodeReusable": false,
   "otpSupportedApplications": [
-    "totpAppFreeOTPName",
-    "totpAppGoogleName"
+    "totpAppGoogleName",
+    "totpAppFreeOTPName"
   ],
   "webAuthnPolicyRpEntityName": "keycloak",
   "webAuthnPolicySignatureAlgorithms": [
@@ -738,6 +869,12 @@
   ],
   "scopeMappings": [
     {
+      "clientScope": "API_READ",
+      "roles": [
+        "API_READ"
+      ]
+    },
+    {
       "clientScope": "offline_access",
       "roles": [
         "offline_access"
@@ -747,6 +884,12 @@
       "clientScope": "SYND_WRITE",
       "roles": [
         "SYND_WRITE"
+      ]
+    },
+    {
+      "clientScope": "API_WRITE",
+      "roles": [
+        "API_WRITE"
       ]
     },
     {
@@ -1130,7 +1273,9 @@
       "secret": "**********",
       "redirectUris": [
         "https://localhost/*",
+        "https://ontoserver.csiro.au/*",
         "https://oidcdebugger.com/debug",
+        "*",
         "https://oauth.pstmn.io/v1/callback"
       ],
       "webOrigins": [
@@ -1240,6 +1385,20 @@
             "claim.name": "clientId",
             "jsonType.label": "String"
           }
+        },
+        {
+          "id": "019be3fc-83a2-49cb-ad1d-a04aecb6aa7d",
+          "name": "Client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "usermodel.clientRoleMapping.clientId": "ontoserver",
+            "multivalued": "true",
+            "userinfo.token.claim": "true"
+          }
         }
       ],
       "defaultClientScopes": [
@@ -1251,6 +1410,114 @@
         "system/*.read"
       ],
       "optionalClientScopes": []
+    },
+    {
+      "id": "1896ccd3-1b14-453c-8a04-f7b107dc12cf",
+      "clientId": "onto-ui",
+      "rootUrl": "https://ontoserver:8444",
+      "adminUrl": "https://ontoserver:8444",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "",
+        "https://ontoserver.csiro.au/*",
+        "https://ontoserver:8444/*",
+        "*"
+      ],
+      "webOrigins": [
+        "https://ontoserver.csiro.au/*",
+        "https://ontoserver:8444",
+        "*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "saml.force.post.binding": "false",
+        "saml.multivalued.roles": "false",
+        "frontchannel.logout.session.required": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false",
+        "saml.server.signature.keyinfo.ext": "false",
+        "use.refresh.tokens": "true",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "client_credentials.use_refresh_token": "false",
+        "require.pushed.authorization.requests": "false",
+        "saml.client.signature": "false",
+        "saml.allow.ecp.flow": "false",
+        "id.token.as.detached.signature": "false",
+        "saml.assertion.signature": "false",
+        "client.secret.creation.time": "1689549189",
+        "saml.encrypt": "false",
+        "saml.server.signature": "false",
+        "exclude.session.state.from.auth.response": "false",
+        "saml.artifact.binding": "false",
+        "saml_force_name_id_format": "false",
+        "acr.loa.map": "{}",
+        "tls.client.certificate.bound.access.tokens": "false",
+        "saml.authnstatement": "false",
+        "display.on.consent.screen": "false",
+        "token.response.type.bearer.lower-case": "false",
+        "saml.onetimeuse.condition": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "aa7aba3a-0171-498b-9fc7-899adb3664e8",
+          "name": "authorities from user client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "usermodel.realmRoleMapping.rolePrefix": "ontoserver",
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "authorities"
+          }
+        },
+        {
+          "id": "a915b8da-41cb-4d14-a53e-a761e8494d2d",
+          "name": "Audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "ontoserver",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "included.custom.audience": "https://ontoserver:8444/fhir"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "API_READ",
+        "API_WRITE",
+        "microprofile-jwt"
+      ]
     },
     {
       "id": "dc63b7cf-90c3-4841-ab22-d471225ff4e3",
@@ -1339,8 +1606,279 @@
       "authorizationSettings": {
         "allowRemoteResourceManagement": false,
         "policyEnforcementMode": "ENFORCING",
-        "resources": [],
-        "policies": [],
+        "resources": [
+          {
+            "name": "group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "Group",
+            "ownerManagedAccess": false,
+            "attributes": {},
+            "_id": "8b110fa1-65be-4e27-9cda-3b6508b38678",
+            "uris": [],
+            "scopes": [
+              {
+                "name": "manage-members"
+              },
+              {
+                "name": "view"
+              },
+              {
+                "name": "manage-membership"
+              },
+              {
+                "name": "view-members"
+              },
+              {
+                "name": "manage"
+              }
+            ]
+          },
+          {
+            "name": "group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "Group",
+            "ownerManagedAccess": false,
+            "attributes": {},
+            "_id": "f53bc987-d3f7-4f3b-99ac-874af61fe6d9",
+            "uris": [],
+            "scopes": [
+              {
+                "name": "manage-members"
+              },
+              {
+                "name": "view"
+              },
+              {
+                "name": "manage-membership"
+              },
+              {
+                "name": "view-members"
+              },
+              {
+                "name": "manage"
+              }
+            ]
+          },
+          {
+            "name": "group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "Group",
+            "ownerManagedAccess": false,
+            "attributes": {},
+            "_id": "e0ee9391-55ea-45d1-9c6e-7a237ae0f9c3",
+            "uris": [],
+            "scopes": [
+              {
+                "name": "manage-members"
+              },
+              {
+                "name": "view"
+              },
+              {
+                "name": "manage-membership"
+              },
+              {
+                "name": "view-members"
+              },
+              {
+                "name": "manage"
+              }
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "id": "23319f22-6124-44b2-b146-85c6367874d2",
+            "name": "All communities owners policy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "roles": "[{\"id\":\"All communities owner\",\"required\":false}]"
+            }
+          },
+          {
+            "id": "6459486b-e8fa-4e48-aa26-52fa5525b083",
+            "name": "test owner policy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "roles": "[{\"id\":\"PERM_testone_OWNER\",\"required\":false}]"
+            }
+          },
+          {
+            "id": "acf5c2d8-6482-47bc-9fee-6bb650d7c68c",
+            "name": "manage.permission.group.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c\"]",
+              "scopes": "[\"manage\"]"
+            }
+          },
+          {
+            "id": "104abcf5-772b-4ec6-9240-c696a3c7e7e5",
+            "name": "view.permission.group.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c\"]",
+              "scopes": "[\"view\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "f6c9e641-772d-42aa-a5f4-bcb3f2ff8b5e",
+            "name": "manage.members.permission.group.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c\"]",
+              "scopes": "[\"manage-members\"]"
+            }
+          },
+          {
+            "id": "66280a31-3632-4b0f-a914-2fc052a9c57e",
+            "name": "view.members.permission.group.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c\"]",
+              "scopes": "[\"view-members\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "4e496c2e-609f-4d2b-a3f4-f43b7bc11a7d",
+            "name": "manage.membership.permission.group.9452d95d-d7cc-420f-90ff-62e7c156e81c",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.9452d95d-d7cc-420f-90ff-62e7c156e81c\"]",
+              "scopes": "[\"manage-membership\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "ef22a7b1-2f0a-4d00-aec5-31f572983c1c",
+            "name": "manage.permission.group.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2\"]",
+              "scopes": "[\"manage\"]"
+            }
+          },
+          {
+            "id": "2d7ff8f3-83b6-4665-8649-730adc3fe3d4",
+            "name": "view.permission.group.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2\"]",
+              "scopes": "[\"view\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "506aa6b9-c689-49ee-ab62-f7ddb39cbea4",
+            "name": "manage.members.permission.group.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2\"]",
+              "scopes": "[\"manage-members\"]"
+            }
+          },
+          {
+            "id": "ad03380c-b7ad-4253-b318-1417b088b8be",
+            "name": "view.members.permission.group.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2\"]",
+              "scopes": "[\"view-members\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "c8a9dc9e-9e3e-4f62-a88a-86cfc8d0ef1f",
+            "name": "manage.membership.permission.group.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.aeb71ceb-ef55-40a7-ad1c-45a21d1f2ee2\"]",
+              "scopes": "[\"manage-membership\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "a3cfc0bb-c20a-4118-a92d-ce45ce6f9dde",
+            "name": "manage.permission.group.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522\"]",
+              "scopes": "[\"manage\"]"
+            }
+          },
+          {
+            "id": "a0777d8e-2ee5-4e00-8bfe-01e1e67d442a",
+            "name": "view.permission.group.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522\"]",
+              "scopes": "[\"view\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "f2493fdf-38fd-40f7-aa11-098ed60e4999",
+            "name": "manage.members.permission.group.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "resources": "[\"group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522\"]",
+              "scopes": "[\"manage-members\"]"
+            }
+          },
+          {
+            "id": "f5079046-2811-4c9f-a580-7cef57ee4e88",
+            "name": "view.members.permission.group.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522\"]",
+              "scopes": "[\"view-members\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          },
+          {
+            "id": "d62f8e7b-592e-4eed-9811-4b6478042a90",
+            "name": "manage.membership.permission.group.91ccebc2-0d54-4862-99e0-c77a6de72522",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "resources": "[\"group.resource.91ccebc2-0d54-4862-99e0-c77a6de72522\"]",
+              "scopes": "[\"manage-membership\"]",
+              "applyPolicies": "[\"test owner policy\",\"All communities owners policy\"]"
+            }
+          }
+        ],
         "scopes": [
           {
             "id": "4de08b21-ba95-4e36-8730-323e3dfde1b3",
@@ -1369,6 +1907,30 @@
           {
             "id": "2ebd52a5-9a97-4213-80be-38559026d8cd",
             "name": "token-exchange"
+          },
+          {
+            "id": "e7c7e859-3c88-4fba-b413-6d0e28385a30",
+            "name": "map-role"
+          },
+          {
+            "id": "752a0aa5-a271-47ad-aa67-e818715a99cf",
+            "name": "map-role-client-scope"
+          },
+          {
+            "id": "c54c9572-6a9d-4b6f-847c-1a0b21d1208f",
+            "name": "map-role-composite"
+          },
+          {
+            "id": "7000e1bb-e55c-4423-8615-c35bff0dfc30",
+            "name": "manage-members"
+          },
+          {
+            "id": "119bc827-59b4-42eb-be99-bef91cd165f6",
+            "name": "view-members"
+          },
+          {
+            "id": "0c3d0a23-097a-4cba-aa0d-08772aef8fc1",
+            "name": "manage-membership"
           }
         ],
         "decisionStrategy": "UNANIMOUS"
@@ -1468,6 +2030,25 @@
       "attributes": {
         "include.in.token.scope": "true",
         "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "id": "c3f99002-cc0a-45b8-8727-02f62fea0065",
+      "name": "API_READ",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
+      "id": "85491a35-3d4d-4d1e-88b4-b11cdeae172b",
+      "name": "PERM_testone_WRITE",
+      "description": "Write scope for the test community",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
       }
     },
     {
@@ -1847,6 +2428,15 @@
       ]
     },
     {
+      "id": "6a42067d-cf6f-45a2-a9f7-9c4d7f5ce5f0",
+      "name": "API_WRITE",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      }
+    },
+    {
       "id": "8881a4cf-9d66-4ef0-95f8-b6f269b0ee7b",
       "name": "SYND_READ",
       "description": "",
@@ -1886,6 +2476,16 @@
           }
         }
       ]
+    },
+    {
+      "id": "8a1b0062-34dc-42c1-867f-cde9241e6254",
+      "name": "PERM_testone_READ",
+      "description": "Read scope for the test community",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
     },
     {
       "id": "10c525cc-49b3-4cc9-ae03-a0816f5452a4",

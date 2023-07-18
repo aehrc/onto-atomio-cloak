@@ -118,6 +118,19 @@ KEYCLOAK_ADMIN and KEYCLOAK_ADMIN_PASSWORD are the passwords for the administrat
 
 All user's created with the example realm file by default have ontoserver read rights. If you want to add write rights to a user - you will need to add the role system/*.write to the user. Similarly, if you want a user with atomio rights, you will need to add SYND_READ/WRITE roles to the user.
 
+You will need to create a user with the role of Community creator - this is the role that enables this user to create communities - you will need to log into the ontoserver realm with this user and create communities, if desired. For the 'Community creator' to be able to log in to it must the realm-management realm-admin role.
+You can create communities on the left hand menu.
+
+This is what a Community Creator user looks like:
+
+![Community Creator](/images/community_author.png)
+
+You will need to create a user/s with the roles of API_WRITE and/or API_READ for ontocommand, which is the onto-ui client. These are the users that you will login to the authoring server, which is located at https://ontoserver:8444/fhir. 
+
+This is an example of what the ontocommand user should look like, depending on what rights level you desire them to have.
+
+![Ontocommand User](/images/onto_ui_user.png)
+
 Make sure you are in the ontoserver realm and not the master realm.
 
 ##### Atomio setup
